@@ -1,0 +1,4 @@
+*.o
+analyse
+.vscode/
+.DS_Store
