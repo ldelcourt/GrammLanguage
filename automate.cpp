@@ -12,15 +12,18 @@ Automate::Automate(string flux) {
 
 void Automate::run() {
   bool continuer = true;
-  int i = 0;
+
   while(continuer) { 
     Symbole *s = lexer->Consulter();
-    continuer = statestack.top()->transition(*this, s);
+    cout << "Lecture du symbole ";
+    s->Affiche();
+    cout << endl;
     lexer->Avancer();
-    i++;
+    continuer = statestack.top()->transition(*this, s);
   }
 
   if(*symbolstack.top() == ERREUR) {
+    symbolstack.top()->Affiche();
     cout << "Syntaxe non reconnue ou programme cassé" << endl;
     return;
   }
@@ -30,10 +33,13 @@ void Automate::run() {
 void Automate::decalage(Symbole* s, Etat* e) {
     statestack.push(e);
     symbolstack.push(s);
+    showStateStack();
+    showSymbolStack();
 }
 
 
-void Automate::reduction(int numeroRegle) {
+void Automate::reduction(int numeroRegle, Symbole* s) {
+  cout << "Réduction " << numeroRegle << endl;
   Expression *e1, *e2;
   Entier *en;
   switch (numeroRegle)
@@ -65,11 +71,33 @@ void Automate::reduction(int numeroRegle) {
     }
     statestack.top()->transition(*this, e1);
 
-  case 5:
+  case 5: // E -> var
     en = (Entier*) symbolstack.top(); symbolstack.pop();
     statestack.pop();
     statestack.top()->transition(*this, new Expression(en->getValue()));
-
   }
 
+  lexer->putSymboleBack(s);
+}
+
+void Automate::showStateStack() {
+  cout << "State stack : ";
+  stack<Etat*> temp = statestack;
+  while(!temp.empty()) {
+    temp.top()->print();
+    cout << " ";
+    temp.pop();
+  }
+  cout << endl;
+}
+
+void Automate::showSymbolStack() {
+  cout << "Symbol stack : ";
+  stack<Symbole*> temp = symbolstack;
+  while(!temp.empty()) {
+    temp.top()->Affiche();
+    cout << " ";
+    temp.pop();
+  }
+  cout << endl;
 }

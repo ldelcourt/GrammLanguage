@@ -2,11 +2,14 @@
 #include "automate.h"
 #include <iostream>
 
+void Etat::print() const {
+    cout << name << " ";
+}
+
 bool Etat0::transition(Automate &automate, Symbole * s) {
     switch(*s) {
         case INT:
             automate.decalage(s, new Etat3);
-            cout << "INT Transition vers Etat 3" << endl;
             break;
         case OPENPAR:
             automate.decalage(s, new Etat2);
@@ -62,10 +65,7 @@ bool Etat3::transition(Automate &automate, Symbole * s) {
         case MULT:
         case CLOSEPAR:
         case FIN:
-            automate.reduction(5);
-            cout << "Symbole:";
-            s->Affiche();
-            cout << "Réduction 5" << endl;
+            automate.reduction(5, s);
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
@@ -133,12 +133,13 @@ bool Etat7::transition(Automate &automate, Symbole * s) {
         case PLUS:
         case CLOSEPAR:
         case FIN:
-            automate.reduction(2);
+            automate.reduction(2, s);
             break;
         
         case MULT:
             automate.decalage(s, new Etat5);
         default:
+            cout << "ERREUR Etat 7" << endl;
             automate.decalage(new Symbole(ERREUR), NULL);
             return false;
     }
@@ -151,7 +152,7 @@ bool Etat8::transition(Automate &automate, Symbole * s) {
         case MULT:
         case CLOSEPAR:
         case FIN:
-            automate.reduction(3);
+            automate.reduction(3, s);
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
@@ -166,7 +167,7 @@ bool Etat9::transition(Automate &automate, Symbole * s) {
         case MULT:
         case CLOSEPAR:
         case FIN:
-            automate.reduction(4);
+            automate.reduction(4, s);
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);

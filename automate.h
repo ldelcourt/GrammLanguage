@@ -12,8 +12,10 @@ class Automate {
       Automate(string flux);
       virtual ~Automate() { }
       void decalage(Symbole* s, Etat* e);
-      void reduction(int numeroRegle);
+      void reduction(int numeroRegle, Symbole* s);
       void run();
+      void showSymbolStack();
+      void showStateStack();
    protected:
       stack<Symbole *> symbolstack;
       stack<Etat *> statestack;

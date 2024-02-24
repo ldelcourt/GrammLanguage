@@ -15,6 +15,7 @@ int main(void) {
       cout<<endl;
       l.Avancer();
    }
+   cout << "Fin de lecture de la chaine, début Automate:" << endl << endl;
    Automate *a = new Automate(sp);
    a->run();
    return 0;

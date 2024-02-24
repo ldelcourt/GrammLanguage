@@ -12,6 +12,7 @@ class Lexer {
 
       Symbole * Consulter();
       void Avancer();
+      void putSymboleBack(Symbole * s) { tampon = s; };
 
    protected:
       string flux;
