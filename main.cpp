@@ -5,9 +5,9 @@
 
 int main(void) {
    string chaine("(1+34)*123");
-   string sp("1+2");
+   //string sp("1+2");
 
-   Lexer l(sp);
+   Lexer l(chaine);
 
    Symbole * s;
    while(*(s=l.Consulter())!=FIN) {
@@ -16,7 +16,7 @@ int main(void) {
       l.Avancer();
    }
    cout << "Fin de lecture de la chaine, début Automate:" << endl << endl;
-   Automate *a = new Automate(sp);
+   Automate *a = new Automate(chaine);
    a->run();
    return 0;
 }

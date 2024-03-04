@@ -34,6 +34,7 @@ bool Etat1::transition(Automate &automate, Symbole * s) {
             break;
         case FIN:
             return false;
+            break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
             return false;
@@ -51,7 +52,7 @@ bool Etat2::transition(Automate &automate, Symbole * s) {
             break;
         case EXPR:
             automate.decalage(s, new Etat6);
-
+            break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
             return false;
@@ -62,8 +63,14 @@ bool Etat2::transition(Automate &automate, Symbole * s) {
 bool Etat3::transition(Automate &automate, Symbole * s) {
     switch(*s) {
         case PLUS:
-        case MULT:
+            automate.reduction(5, s);
+            break;
+        case MULT:  
+            automate.reduction(5, s);
+            break;
         case CLOSEPAR:
+            automate.reduction(5, s);
+            break;
         case FIN:
             automate.reduction(5, s);
             break;
@@ -84,7 +91,7 @@ bool Etat4::transition(Automate &automate, Symbole * s) {
             break;
         case EXPR:
             automate.decalage(s, new Etat7);
-
+            break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
             return false;
@@ -102,7 +109,7 @@ bool Etat5::transition(Automate &automate, Symbole * s) {
             break;
         case EXPR:
             automate.decalage(s, new Etat8);
-
+            break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
             return false;
@@ -120,7 +127,7 @@ bool Etat6::transition(Automate &automate, Symbole * s) {
             break;
         case CLOSEPAR:
             automate.decalage(s, new Etat9);
-
+            break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
             return false;
@@ -131,13 +138,17 @@ bool Etat6::transition(Automate &automate, Symbole * s) {
 bool Etat7::transition(Automate &automate, Symbole * s) {
     switch(*s) {
         case PLUS:
+            automate.reduction(2, s);
+            break;
         case CLOSEPAR:
+            automate.reduction(2, s);
+            break;
         case FIN:
             automate.reduction(2, s);
             break;
-        
         case MULT:
             automate.decalage(s, new Etat5);
+            break;
         default:
             cout << "ERREUR Etat 7" << endl;
             automate.decalage(new Symbole(ERREUR), NULL);
@@ -149,8 +160,14 @@ bool Etat7::transition(Automate &automate, Symbole * s) {
 bool Etat8::transition(Automate &automate, Symbole * s) {
     switch(*s) {
         case PLUS:
+            automate.reduction(3, s);
+            break;
         case MULT:
+            automate.reduction(3, s);
+            break;
         case CLOSEPAR:
+            automate.reduction(3, s);
+            break;
         case FIN:
             automate.reduction(3, s);
             break;
@@ -164,8 +181,14 @@ bool Etat8::transition(Automate &automate, Symbole * s) {
 bool Etat9::transition(Automate &automate, Symbole * s) {
     switch(*s) {
         case PLUS:
+            automate.reduction(4, s);
+            break;
         case MULT:
+            automate.reduction(4, s);
+            break;
         case CLOSEPAR:
+            automate.reduction(4, s);
+            break;
         case FIN:
             automate.reduction(4, s);
             break;

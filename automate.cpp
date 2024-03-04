@@ -31,6 +31,7 @@ void Automate::run() {
 }
 
 void Automate::decalage(Symbole* s, Etat* e) {
+    cout << "Décalage " << endl;
     statestack.push(e);
     symbolstack.push(s);
     showStateStack();
