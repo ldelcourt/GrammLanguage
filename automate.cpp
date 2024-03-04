@@ -23,7 +23,6 @@ void Automate::run() {
   }
 
   if(*symbolstack.top() == ERREUR) {
-    symbolstack.top()->Affiche();
     cout << "Syntaxe non reconnue ou programme cassé" << endl;
     return;
   }
@@ -32,7 +31,9 @@ void Automate::run() {
 
 void Automate::decalage(Symbole* s, Etat* e) {
     cout << "Décalage " << endl;
-    statestack.push(e);
+    if(e){
+      statestack.push(e); 
+    }
     symbolstack.push(s);
     showStateStack();
     showSymbolStack();
